@@ -1,5 +1,6 @@
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_test/model/category.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._instance();
@@ -38,7 +39,42 @@ class DatabaseHelper {
     final List<Map<String, dynamic>> result = await db.query(categoryTable);
     return result;
   }
-  Future<List<Category>> getCategoryList()async{
-    
+
+  Future<List<Category>> getCategoryList() async {
+    final List<Map<String, dynamic>> taskMapList = await getCategoryMap();
+    final List<Category> categoryList = [];
+    taskMapList.forEach((categoryMap) {
+      categoryList.add(Category.fromMap(categoryMap));
+    });
+    categoryList.sort(
+        (categoryA, categoryB) => categoryA.date.compareTo(categoryB.date));
+    return categoryList;
+  }
+
+  Future<int> insertCategory(Category category) async {
+    Database db = await this.db;
+    final int result = await db.insert(categoryTable, category.toMap());
+    return result;
+  }
+
+  Future<int> updateCategory(Category category) async {
+    Database db = await this.db;
+    final int result = await db.update(
+      categoryTable,
+      category.toMap(),
+      where: '$colId = ?',
+      whereArgs: [category.id],
+    );
+    return result;
+  }
+
+  Future<int> deleteCategory(int id) async {
+    Database db = await this.db;
+    final int result = await db.delete(
+      categoryTable,
+      where: '$colId = ?',
+      whereArgs: [id],
+    );
+    return result;
   }
 }
