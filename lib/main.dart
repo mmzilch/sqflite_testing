@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite_test/alert_dialog.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -73,7 +74,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
         floatingActionButton: FloatingActionButton(
             backgroundColor: Colors.teal,
             child: Icon(Icons.add),
-            onPressed: () {}),
+            onPressed: () {
+              showDialog(
+            context: context,
+            builder: (context) {
+              return AddNewCategory();
+            },
+          );
+            }),
       ),
     );
   }
