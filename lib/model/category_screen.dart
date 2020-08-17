@@ -32,30 +32,31 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 18))),
-          ], rows: [DataRow(cells: [
-            DataCell(
-                          Text('Hello',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500)),
-                                  ),
-
-                                  DataCell(
-                          Text('Hello',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500)),
-                                  ),
-                                  DataCell(
-                          Text('Hello',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500)),
-                                  ),
-          ]
+          ],
+          rows: [
+            DataRow(cells: [
+              DataCell(
+                Text('Hello',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500)),
+              ),
+              DataCell(
+                Text('Hello',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500)),
+              ),
+              DataCell(
+                Text('Hello',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500)),
+              ),
+            ])
           ],
         ),
       ),
