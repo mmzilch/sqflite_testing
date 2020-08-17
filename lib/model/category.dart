@@ -1,6 +1,6 @@
 class Category {
   int id;
-  DateTime date;
+  String date;
   String name;
   String code;
   int synced;
@@ -14,7 +14,7 @@ class Category {
       map['id'] = id;
     }
     map['name'] = name;
-    map['date'] = date.toIso8601String();
+    map['date'] = date;
     map['code'] = code;
     map['synced'] = synced;
     return map;
@@ -24,7 +24,7 @@ class Category {
     return Category.withID(
       id: map['id'],
       name: map['name'],
-      date: DateTime.parse(map['date']),
+      date: map['date'],
       code: map['code'],
       synced: map['synced'],
     );

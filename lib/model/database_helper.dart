@@ -31,7 +31,7 @@ class DatabaseHelper {
 
   void _createDB(Database db, int version) async {
     await db.execute(
-        'CREATE TABLE $categoryTable($colId INTEGER PRIMARY KEY AUTOINCREMENT,$colName TEXT,$colCode TEXT,$colDate TEXT , $colSynced INTEGER)');
+        'CREATE TABLE $categoryTable($colId INTEGER PRIMARY KEY AUTOINCREMENT,$colName TEXT,$colCode TEXT,$colDate TEXT , $colSynced BOOLEAN)');
   }
 
   Future<List<Map<String, dynamic>>> getCategoryMap() async {
