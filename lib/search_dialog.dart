@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite_test/model/category.dart';
-import 'package:sqflite_test/model/database_helper.dart';
-
-import 'model/category.dart';
-import 'model/database_helper.dart';
 
 class SearchDialog extends StatefulWidget {
   final Function updateSearchList;
@@ -90,10 +85,16 @@ class _SearchDialogState extends State<SearchDialog> {
             )),
         FlatButton(
           onPressed: () {
+            if (_formKey.currentState.validate()) {
+              _formKey.currentState.save();
+              Navigator.pop(context);
+            }
             widget.updateSearchList(titleController.text, _searchBy);
-            Navigator.pop(context);
           },
-          child: Text('Search'),
+          child: Text(
+            'Search',
+            style: TextStyle(color: Colors.blue),
+          ),
         )
       ],
     );

@@ -64,7 +64,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 },
               ),
               IconButton(
-                icon: Icon(Icons.home),
+                icon: Icon(Icons.arrow_back),
                 onPressed: () {
                   _updateCategoryList();
                 },
