@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:sqflite_test/model/category.dart';
 import 'package:sqflite_test/model/database_helper.dart';
 
+import 'model/category.dart';
+import 'model/database_helper.dart';
+
 class SearchDialog extends StatefulWidget {
+  final Function updateSearchList;
+  SearchDialog({this.updateSearchList});
   @override
   _SearchDialogState createState() => _SearchDialogState();
 }
@@ -10,31 +15,10 @@ class SearchDialog extends StatefulWidget {
 class _SearchDialogState extends State<SearchDialog> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController titleController = TextEditingController();
-  final List<String> _searchItems = ['Id', 'Name', 'Code', 'Date Time'];
+  final List<String> _searchItems = ['Id', 'Name', 'Code', 'Date'];
   String _searchName;
   String _searchBy;
   String userSearchInput = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _searchCategoryList('D');
-    print(_searchCategoryList('D'));
-  }
-
-  _searchCategoryList(String userInput) async{
-
-   search(String userInput){
-      setState(() {
-        userInput = titleController.text;
-        if(userInput.isEmpty){
-          return;
-        }else{
-          userSearchInput = userInput;
-        }
-      });
-   }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +44,7 @@ class _SearchDialogState extends State<SearchDialog> {
                       : null,
                   onSaved: (input) => _searchName = input,
                   autofocus: true,
-                controller: titleController,
+                  controller: titleController,
                   initialValue: _searchName,
                 )),
             Padding(
@@ -106,7 +90,8 @@ class _SearchDialogState extends State<SearchDialog> {
             )),
         FlatButton(
           onPressed: () {
-            // _searchCategoryList(titleController.text);
+            widget.updateSearchList(titleController.text, _searchBy);
+            Navigator.pop(context);
           },
           child: Text('Search'),
         )
