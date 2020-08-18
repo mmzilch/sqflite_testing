@@ -14,22 +14,22 @@ class _SearchDialogState extends State<SearchDialog> {
   String _searchName;
   String _searchBy;
 
-List<Category> _categoryList;
-  List<Category> category;
+// List<Category> _categoryList;
+//   List<Category> category;
 
-  @override
-  void initState() {
-    super.initState();
-    _searchCategoryList('D');
-    print(_searchCategoryList('D'));
-  }
+//   @override
+//   void initState() {
+//     super.initState();
+//     _searchCategoryList('D');
+//     print(_searchCategoryList('D'));
+//   }
 
-  _searchCategoryList(String userInput) async{
-    _categoryList = await DatabaseHelper.instance.getCategorySearchList(userInput);
-    setState(() {
-      category = _categoryList;
-    });
-  }
+//   _searchCategoryList(String userInput) async{
+//     _categoryList = await DatabaseHelper.instance.getCategorySearchList(userInput);
+//     setState(() {
+//       category = _categoryList;
+//     });
+//   }
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +100,9 @@ List<Category> _categoryList;
               style: TextStyle(color: Colors.blue),
             )),
         FlatButton(
-          onPressed: () {},
+          onPressed: () {
+            // _searchCategoryList(titleController.text);
+          },
           child: Text('Search'),
         )
       ],
