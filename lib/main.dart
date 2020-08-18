@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite_test/animation_view.dart';
 import 'package:sqflite_test/model/category.dart';
 import 'package:sqflite_test/search_dialog.dart';
 
@@ -92,11 +93,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           : null,
                       child: category.length == 0
                           ? Center(
-                              child: Text("There is no category.",
-                                  style: TextStyle(
-                                      color: Colors.teal,
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold)))
+                              child: AnimationView()
+                              // Text("There is no category.",
+                              //     style: TextStyle(
+                              //         color: Colors.teal,
+                              //         fontSize: 25,
+                              //         fontWeight: FontWeight.bold))
+                                      )
                           : DataTable(
                               columns: [
                                   DataColumn(
