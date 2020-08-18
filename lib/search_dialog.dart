@@ -13,23 +13,28 @@ class _SearchDialogState extends State<SearchDialog> {
   final List<String> _searchItems = ['Id', 'Name', 'Code', 'Date Time'];
   String _searchName;
   String _searchBy;
+  String userSearchInput = '';
 
-// List<Category> _categoryList;
-//   List<Category> category;
+  @override
+  void initState() {
+    super.initState();
+    _searchCategoryList('D');
+    print(_searchCategoryList('D'));
+  }
 
-//   @override
-//   void initState() {
-//     super.initState();
-//     _searchCategoryList('D');
-//     print(_searchCategoryList('D'));
-//   }
+  _searchCategoryList(String userInput) async{
 
-//   _searchCategoryList(String userInput) async{
-//     _categoryList = await DatabaseHelper.instance.getCategorySearchList(userInput);
-//     setState(() {
-//       category = _categoryList;
-//     });
-//   }
+   search(String userInput){
+      setState(() {
+        userInput = titleController.text;
+        if(userInput.isEmpty){
+          return;
+        }else{
+          userSearchInput = userInput;
+        }
+      });
+   }
+  }
 
   @override
   Widget build(BuildContext context) {
