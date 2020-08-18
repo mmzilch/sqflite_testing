@@ -51,6 +51,16 @@ class DatabaseHelper {
     return categoryList;
   }
 
+  Future<List<Category>> getCategorySearchList() async {
+    Database db = await this.db;
+    final List<Map<String, dynamic>> categroyMapList = await getCategoryMap();
+    final List<Category> categoryList = [];
+    taskMapList.forEach((categoryMap) {
+      categoryList.add(Category.fromMap(categoryMap));
+    });
+    return categoryList;
+  }
+
   Future<int> insertCategory(Category category) async {
     Database db = await this.db;
     final int result = await db.insert(categoryTable, category.toMap());
