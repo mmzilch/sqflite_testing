@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite_test/model/category.dart';
+import 'package:sqflite_test/model/database_helper.dart';
 
 class SearchDialog extends StatefulWidget {
   @override
@@ -11,6 +13,24 @@ class _SearchDialogState extends State<SearchDialog> {
   final List<String> _searchItems = ['Id', 'Name', 'Code', 'Date Time'];
   String _searchName;
   String _searchBy;
+
+List<Category> _categoryList;
+  List<Category> category;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchCategoryList('D');
+    print(_searchCategoryList('D'));
+  }
+
+  _searchCategoryList(String userInput) async{
+    _categoryList = await DatabaseHelper.instance.getCategorySearchList(userInput);
+    setState(() {
+      category = _categoryList;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(

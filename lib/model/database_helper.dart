@@ -51,15 +51,33 @@ class DatabaseHelper {
     return categoryList;
   }
 
-  Future<List<Category>> getCategorySearchList() async {
-    Database db = await this.db;
-    final List<Map<String, dynamic>> categroyMapList = await getCategoryMap();
-    final List<Category> categoryList = [];
-    taskMapList.forEach((categoryMap) {
-      categoryList.add(Category.fromMap(categoryMap));
-    });
-    return categoryList;
-  }
+  // Future<List<Category>> getCategorySearchList(String userInput) async {
+  //   Database db = await this.db;
+  //   final List<Map<String,dynamic >> result = await db.rawQuery("SELECT * FROM category_table WHERE title OR  body LIKE '%${userInput}%'");
+  //   final List<Category> categorySearchList = [];
+  //   result.forEach((categoryMap) {
+  //     categorySearchList.add(Category.fromMap(categoryMap));
+  //   });
+  //   categorySearchList.sort(
+  //       (categoryA, categoryB) => categoryA.name.compareTo(categoryB.name));
+  //       print(categorySearchList);
+  //   return categorySearchList;
+  // }
+
+  Future<List<Category>> getAllWords() async {
+    final db = await this.db;
+    var response = await db.query(categoryTable);
+    List<Category> list = response.map((c) => Category.fromMap(c)).toList();
+    return list;
+}
+
+//getting search results
+Future<List<Category>> searchResults(String userSearch) async {
+    final db = await this.db;
+    var response = await db.query(categoryTable, where: '$colCode = ? OR $colName = ?', whereArgs: [userSearch, userSearch]);
+    List<Category> list = response.map((c) => Category.fromMap(c)).toList();
+    return list;
+}
 
   Future<int> insertCategory(Category category) async {
     Database db = await this.db;
