@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite_test/alert_dialog.dart';
 import 'package:sqflite_test/model/category.dart';
+import 'package:sqflite_test/search_dialog.dart';
 
+import 'add_new_category.dart';
 import 'model/database_helper.dart';
 
 void main() {
@@ -37,6 +38,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(title: Text('Category'),
+        leading:
+         IconButton(
+              icon: Icon(Icons.search), onPressed: () { 
+                showDialog(
+                context: context,
+                builder: (context) {
+                  return SearchDialog();
+                },
+              );
+              },),),
         body: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: SingleChildScrollView(
