@@ -78,7 +78,7 @@ class DatabaseHelper {
       categoryList.add(Category.fromMap(categoryMap));
     });
     categoryList.sort(
-        (categoryA, categoryB) => categoryA.date.compareTo(categoryB.date));
+        (categoryA, categoryB) => categoryA.id.compareTo(categoryB.id));
     return categoryList;
   }
 
@@ -108,7 +108,7 @@ class DatabaseHelper {
       categoryList.add(Category.fromMap(categoryMap));
     });
     categoryList.sort(
-        (categoryA, categoryB) => categoryA.date.compareTo(categoryB.date));
+        (categoryA, categoryB) => categoryA.id.compareTo(categoryB.id));
     return categoryList;
   }
 
