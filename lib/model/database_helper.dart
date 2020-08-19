@@ -34,6 +34,7 @@ class DatabaseHelper {
   Future<Database> _initDatabase() async {
     var directory = await getApplicationDocumentsDirectory();
     String path = directory.path + "cloud_pos.db";
+    print(path);
     final cloudPosDB =
         await openDatabase(path, version: 1, onCreate: _createDB);
     return cloudPosDB;
@@ -45,8 +46,7 @@ class DatabaseHelper {
           $colName TEXT,
           $colCode TEXT,
           $colDate TEXT ,
-          $colSynced BOOLEAN,
-          FOREIGN KEY($colName) REFERENCES $itemTable (category) ON DELETE NO ACTION ON UPDATE NO ACTION
+          $colSynced BOOLEAN
           )''');
     await db.execute('''CREATE TABLE $itemTable(
       $itemColId INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -56,6 +56,7 @@ class DatabaseHelper {
       $itemColCategory TEXT,
       $itemColPrice TEXT,
       $itemColSynced BOOLEAN,
+      FOREIGN KEY($itemColCategory) REFERENCES $categoryTable ($colName) ON DELETE NO ACTION ON UPDATE NO ACTION
     )''');
   }
 
@@ -71,14 +72,30 @@ class DatabaseHelper {
     return result;
   }
 
+  Future<List<Map<String, dynamic>>> getNameMap() async {
+    Database db = await this.db;
+    final List<Map<String, dynamic>> result =
+        await db.rawQuery('SELECT name FROM $categoryTable');
+    return result;
+  }
+
+  Future<List<Category>> getNameList() async {
+    final List<Map<String, dynamic>> taskMapList = await getNameMap();
+    final List<Category> categoryList = [];
+    taskMapList.forEach((categoryMap) {
+      categoryList.add(Category.fromMap(categoryMap));
+    });
+    return categoryList;
+  }
+
   Future<List<Category>> getCategoryList() async {
     final List<Map<String, dynamic>> taskMapList = await getCategoryMap();
     final List<Category> categoryList = [];
     taskMapList.forEach((categoryMap) {
       categoryList.add(Category.fromMap(categoryMap));
     });
-    categoryList.sort(
-        (categoryA, categoryB) => categoryA.id.compareTo(categoryB.id));
+    categoryList
+        .sort((categoryA, categoryB) => categoryA.id.compareTo(categoryB.id));
     return categoryList;
   }
 
@@ -107,8 +124,8 @@ class DatabaseHelper {
     taskMapList.forEach((categoryMap) {
       categoryList.add(Category.fromMap(categoryMap));
     });
-    categoryList.sort(
-        (categoryA, categoryB) => categoryA.id.compareTo(categoryB.id));
+    categoryList
+        .sort((categoryA, categoryB) => categoryA.id.compareTo(categoryB.id));
     return categoryList;
   }
 
