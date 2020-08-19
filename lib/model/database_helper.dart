@@ -157,7 +157,7 @@ class DatabaseHelper {
     final int result = await db.update(
       itemTable,
       item.toMap(),
-      where: 'id = ?',
+      where: '$colId = ?',
       whereArgs: [item.id],
     );
     return result;

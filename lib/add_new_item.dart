@@ -16,7 +16,7 @@ class AddNewItem extends StatefulWidget {
 }
 
 class _AddNewItemState extends State<AddNewItem> {
-  DateFormat formattedDate = DateFormat.yMd().add_jm();
+  
 
   _addItem() async {
     if (_formKey.currentState.validate()) {
@@ -33,7 +33,7 @@ class _AddNewItemState extends State<AddNewItem> {
       } else {
         item.id = widget.item.id;
         item.synced = widget.item.synced;
-        // DatabaseHelper.instance.updateCategory(category);
+        DatabaseHelper.instance.updateItem(item);
       }
       await widget.updateItemList();
       Navigator.pop(context);
@@ -42,13 +42,22 @@ class _AddNewItemState extends State<AddNewItem> {
 
   String _category;
   final _formKey = GlobalKey<FormState>();
+  DateFormat formattedDate = DateFormat.yMd().add_jm();
   TextEditingController nameController = TextEditingController();
   TextEditingController codeController = TextEditingController();
   TextEditingController priceController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+
+    if (widget.item != null) {
+      nameController.text = widget.item.name;
+      codeController.text = widget.item.code;
+      priceController.text = widget.item.price;
+    }
+
     return AlertDialog(
-      title: Text("Add new items"),
+      title: Text(widget.item == null ? "Add New Item" : "Update Item"),
       content: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -100,7 +109,8 @@ class _AddNewItemState extends State<AddNewItem> {
                     autofocus: false,
                     controller: priceController,
                   )),
-              Padding(
+              widget.item == null 
+              ? Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                   child: DropdownButtonFormField(
@@ -128,7 +138,7 @@ class _AddNewItemState extends State<AddNewItem> {
                           : null,
                       onChanged: (value) {
                         _category = value;
-                      })),
+                      })) : Text(widget.item.category),
             ],
           ),
         ),
@@ -146,8 +156,7 @@ class _AddNewItemState extends State<AddNewItem> {
           onPressed: () {
             _addItem();
           },
-          child: Text(
-            'Add',
+          child: Text(widget.item == null ? 'Add' : 'Update',
             style: TextStyle(color: Colors.blue),
           ),
         )
