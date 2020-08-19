@@ -97,13 +97,13 @@ class _ItemScreenState extends State<ItemScreen> {
                                               fontWeight: FontWeight.bold,
                                               fontSize: 18))),
                                   DataColumn(
-                                      label: Text('Code',
+                                      label: Text('Name',
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold,
                                               fontSize: 18))),
                                   DataColumn(
-                                      label: Text('Name',
+                                      label: Text('Code',
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold,
@@ -114,13 +114,13 @@ class _ItemScreenState extends State<ItemScreen> {
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold,
                                               fontSize: 18))),
-                                               DataColumn(
+                                  DataColumn(
                                       label: Text('Category',
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold,
                                               fontSize: 18))),
-                                               DataColumn(
+                                  DataColumn(
                                       label: Text('Price',
                                           style: TextStyle(
                                               color: Colors.black,
@@ -154,26 +154,26 @@ class _ItemScreenState extends State<ItemScreen> {
                                               fontWeight: FontWeight.w500,
                                               fontSize: 15),
                                         )),
-                                        DataCell(Text(e.code,
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 15))),
                                         DataCell(Text(e.name,
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 17))),
+                                        DataCell(Text(e.code,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 15))),
                                         DataCell(Text(e.date,
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold))),
-                                                DataCell(Text(e.category,
+                                        DataCell(Text(e.category,
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 17))),
-                                                DataCell(Text(e.price,
+                                        DataCell(Text(e.price,
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.w500,
@@ -226,8 +226,7 @@ class _ItemScreenState extends State<ItemScreen> {
                 showDialog(
                   context: context,
                   builder: (context) {
-                    return AddNewItem(
-                        updateItemList: _updateItemList);
+                    return AddNewItem(updateItemList: _updateItemList);
                   },
                 );
               }),
