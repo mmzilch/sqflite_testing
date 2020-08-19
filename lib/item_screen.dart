@@ -1,34 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite_test/add_new_item.dart';
+import 'package:sqflite_test/model/database_helper.dart';
+import 'package:sqflite_test/model/item.dart';
 
-class CategoryScreen extends StatefulWidget {
+class ItemScreen extends StatefulWidget {
   @override
-  _CategoryScreenState createState() => _CategoryScreenState();
+  _ItemScreenState createState() => _ItemScreenState();
 }
 
-class _CategoryScreenState extends State<CategoryScreen> {
-  List<Category> _categoryList;
-  List<Category> category;
+class _ItemScreenState extends State<ItemScreen> {
+  List<Item> _itemList;
+  List<Item> item;
 
   @override
   void initState() {
     super.initState();
-    _updateCategoryList();
+    _updateItemList();
   }
 
-  _updateCategoryList() async {
-    _categoryList = await DatabaseHelper.instance.getCategoryList();
+  _updateItemList() async {
+    _itemList = await DatabaseHelper.instance.getItemList();
     setState(() {
-      category = _categoryList;
+      item = _itemList;
     });
   }
 
-  _updateSearchList(String usersearch, String cloumn) async {
-    _categoryList =
-        await DatabaseHelper.instance.getSearchList(usersearch, cloumn);
-    setState(() {
-      category = _categoryList;
-    });
-  }
+  // _updateSearchList(String usersearch, String cloumn) async {
+  //   _itemList =
+  //       await DatabaseHelper.instance.getItemSearchList(usersearch, cloumn);
+  //   setState(() {
+  //     item = _itemList;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +41,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.teal,
-            title: Text('Category'),
+            title: Text('Item'),
             actions: [
               IconButton(
                 icon: Icon(Icons.search),
@@ -46,7 +49,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return SearchDialog(updateSearchList: _updateSearchList);
+                      //return SearchDialog(updateSearchList: _updateSearchList);
                     },
                   );
                 },
@@ -54,7 +57,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               IconButton(
                 icon: Icon(Icons.arrow_back),
                 onPressed: () {
-                  _updateCategoryList();
+                  _updateItemList();
                 },
               )
             ],
@@ -63,7 +66,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
             scrollDirection: Axis.horizontal,
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
-              child: category == null
+              child: item == null
                   ? Container(
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
@@ -72,15 +75,15 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               backgroundColor: Colors.teal)),
                     )
                   : Container(
-                      height: category.length == 0
+                      height: item.length == 0
                           ? MediaQuery.of(context).size.height
                           : null,
-                      width: category.length == 0
+                      width: item.length == 0
                           ? MediaQuery.of(context).size.width
                           : null,
-                      child: category.length == 0
+                      child: item.length == 0
                           ? Center(
-                              child: Text("There is no category.",
+                              child: Text("There is no item.",
                                   style: TextStyle(
                                       color: Colors.teal,
                                       fontSize: 25,
@@ -111,6 +114,18 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold,
                                               fontSize: 18))),
+                                               DataColumn(
+                                      label: Text('Category',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18))),
+                                               DataColumn(
+                                      label: Text('Price',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18))),
                                   DataColumn(
                                       label: Text('Synced',
                                           style: TextStyle(
@@ -130,7 +145,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                               fontWeight: FontWeight.bold,
                                               fontSize: 18))),
                                 ],
-                              rows: category
+                              rows: item
                                   .map((e) => DataRow(cells: [
                                         DataCell(Text(
                                           e.id.toString(),
@@ -153,13 +168,22 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                             style: TextStyle(
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.bold))),
+                                                DataCell(Text(e.category,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 17))),
+                                                DataCell(Text(e.price,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 17))),
                                         DataCell(
                                           Checkbox(
                                             onChanged: (value) {
                                               e.synced = value ? 1 : 0;
-                                              DatabaseHelper.instance
-                                                  .updateCategory(e);
-                                              _updateCategoryList();
+                                              //DatabaseHelper.instance.updateItem(e);
+                                              _updateItemList();
                                             },
                                             activeColor: Colors.green,
                                             value: e.synced == 1 ? true : false,
@@ -171,9 +195,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                               color: Colors.red,
                                             ),
                                             onPressed: () {
-                                              DatabaseHelper.instance
-                                                  .deleteCategory(e.id);
-                                              _updateCategoryList();
+                                              // DatabaseHelper.instance.deleteItem(e.id);
+                                              _updateItemList();
                                             })),
                                         DataCell(IconButton(
                                             icon: Icon(
@@ -184,10 +207,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                               showDialog(
                                                 context: (context),
                                                 builder: (context) {
-                                                  return AddNewCategory(
-                                                      category: e,
-                                                      updateCategoryList:
-                                                          _updateCategoryList);
+                                                  return AddNewItem(
+                                                      item: e,
+                                                      updateItemList:
+                                                          _updateItemList);
                                                 },
                                               );
                                             })),
@@ -203,8 +226,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 showDialog(
                   context: context,
                   builder: (context) {
-                    return AddNewCategory(
-                        updateCategoryList: _updateCategoryList);
+                    return AddNewItem(
+                        updateItemList: _updateItemList);
                   },
                 );
               }),
