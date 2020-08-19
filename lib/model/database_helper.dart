@@ -34,7 +34,7 @@ class DatabaseHelper {
   Future<Database> _initDatabase() async {
     var directory = await getApplicationDocumentsDirectory();
     String path = directory.path + "cloud_pos.db";
-    print(path);
+
     final cloudPosDB =
         await openDatabase(path, version: 1, onCreate: _createDB);
     return cloudPosDB;
@@ -152,11 +152,11 @@ class DatabaseHelper {
     return result;
   }
 
-  Future<int> deleteCategory(int id) async {
+  Future<int> deleteCategory({int id, String databaseName}) async {
     Database db = await this.db;
     final int result = await db.delete(
-      categoryTable,
-      where: '$colId = ?',
+      databaseName,
+      where: 'id = ?',
       whereArgs: [id],
     );
     return result;

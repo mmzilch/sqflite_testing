@@ -196,7 +196,12 @@ class _ItemScreenState extends State<ItemScreen> {
                                             color: Colors.red,
                                           ),
                                           onPressed: () {
-                                            // DatabaseHelper.instance.deleteItem(e.id);
+                                            DatabaseHelper.instance
+                                                .deleteCategory(
+                                              id: e.id,
+                                              databaseName: "item_table",
+                                            );
+
                                             _updateItemList();
                                           })),
                                       DataCell(IconButton(

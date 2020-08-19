@@ -175,7 +175,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                           ),
                                           onPressed: () {
                                             DatabaseHelper.instance
-                                                .deleteCategory(e.id);
+                                                .deleteCategory(
+                                              id: e.id,
+                                              databaseName: "category_table",
+                                            );
                                             _updateCategoryList();
                                           })),
                                       DataCell(IconButton(
