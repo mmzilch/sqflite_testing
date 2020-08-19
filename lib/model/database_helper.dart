@@ -152,6 +152,17 @@ class DatabaseHelper {
     return result;
   }
 
+  Future<int> updateItem(Item item) async {
+    Database db = await this.db;
+    final int result = await db.update(
+      itemTable,
+      item.toMap(),
+      where: 'id = ?',
+      whereArgs: [item.id],
+    );
+    return result;
+  }
+
   Future<int> deleteCategory({int id, String databaseName}) async {
     Database db = await this.db;
     final int result = await db.delete(

@@ -4,7 +4,6 @@ import 'package:sqflite_test/model/database_helper.dart';
 import 'package:sqflite_test/model/item.dart';
 
 import 'model/category.dart';
-import 'model/category.dart';
 
 class ItemScreen extends StatefulWidget {
   @override
@@ -41,6 +40,7 @@ class _ItemScreenState extends State<ItemScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          leading: Text(""),
           backgroundColor: Colors.teal,
           title: Text('Item'),
           actions: [
@@ -183,7 +183,8 @@ class _ItemScreenState extends State<ItemScreen> {
                                         Checkbox(
                                           onChanged: (value) {
                                             e.synced = value ? 1 : 0;
-                                            //DatabaseHelper.instance.updateItem(e);
+                                            DatabaseHelper.instance
+                                                .updateItem(e);
                                             _updateItemList();
                                           },
                                           activeColor: Colors.green,

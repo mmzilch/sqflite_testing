@@ -40,6 +40,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          leading: Text(""),
           backgroundColor: Colors.teal,
           title: Text('Category'),
           actions: [
