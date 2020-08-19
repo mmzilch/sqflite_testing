@@ -17,6 +17,7 @@ class AddNewItem extends StatefulWidget {
 
 class _AddNewItemState extends State<AddNewItem> {
   
+  DateFormat formattedDate = DateFormat.yMd().add_jm();
 
   _addItem() async {
     if (_formKey.currentState.validate()) {
@@ -32,6 +33,7 @@ class _AddNewItemState extends State<AddNewItem> {
         DatabaseHelper.instance.insertItem(item);
       } else {
         item.id = widget.item.id;
+        item.category = widget.item.category;
         item.synced = widget.item.synced;
         DatabaseHelper.instance.updateItem(item);
       }
@@ -42,7 +44,6 @@ class _AddNewItemState extends State<AddNewItem> {
 
   String _category;
   final _formKey = GlobalKey<FormState>();
-  DateFormat formattedDate = DateFormat.yMd().add_jm();
   TextEditingController nameController = TextEditingController();
   TextEditingController codeController = TextEditingController();
   TextEditingController priceController = TextEditingController();
@@ -109,8 +110,8 @@ class _AddNewItemState extends State<AddNewItem> {
                     autofocus: false,
                     controller: priceController,
                   )),
-              widget.item == null 
-              ? Padding(
+              widget.item ==null ?
+              Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                   child: DropdownButtonFormField(
@@ -138,7 +139,10 @@ class _AddNewItemState extends State<AddNewItem> {
                           : null,
                       onChanged: (value) {
                         _category = value;
-                      })) : Text(widget.item.category),
+                      }
+                      )
+                      ) : Text(widget.item.category)
+                      ,
             ],
           ),
         ),
@@ -153,9 +157,7 @@ class _AddNewItemState extends State<AddNewItem> {
               style: TextStyle(color: Colors.blue),
             )),
         FlatButton(
-          onPressed: () {
-            _addItem();
-          },
+          onPressed: () => _addItem(),
           child: Text(widget.item == null ? 'Add' : 'Update',
             style: TextStyle(color: Colors.blue),
           ),
