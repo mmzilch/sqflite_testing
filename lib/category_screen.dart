@@ -205,16 +205,20 @@ class _CategoryScreenState extends State<CategoryScreen> {
         floatingActionButton: FloatingActionButton(
             backgroundColor: Colors.teal,
             child: Icon(Icons.add),
-            onPressed: () async{
-              List<Category> categoryIdList = await DatabaseHelper.instance.getCategoryIdList();
+            onPressed: () async {
+              List<Category> categoryIdList =
+                  await DatabaseHelper.instance.getCategoryIdList();
               List<int> idList = categoryIdList.map((e) => e.id).toList();
-           print(idList.isEmpty ? 0 : idList.reduce((curr, next) => curr > next? curr: next));
+              //  print(idList.isEmpty ? 0 : idList.reduce((curr, next) => curr > next? curr: next));
               showDialog(
                 context: context,
                 builder: (context) {
                   return AddNewCategory(
                       updateCategoryList: _updateCategoryList,
-                      categoryId: idList.isEmpty ? 0 : idList.reduce((curr, next) => curr > next? curr: next));
+                      categoryId: idList.isEmpty
+                          ? 0
+                          : idList.reduce(
+                              (curr, next) => curr > next ? curr : next));
                 },
               );
             }),

@@ -42,7 +42,7 @@ class DatabaseHelper {
 
   void _createDB(Database db, int version) async {
     await db.execute('''CREATE TABLE $categoryTable(
-          $colId INTEGER PRIMARY KEY AUTOINCREMENT,
+          $colId INTEGER PRIMARY KEY,
           $colName TEXT,
           $colCode TEXT,
           $colDate TEXT ,
@@ -103,7 +103,8 @@ class DatabaseHelper {
   }
 
   Future<List<Category>> getCategoryIdList() async {
-    final List<Map<String, dynamic>> categoryIdMapList = await getCategoryIdMap();
+    final List<Map<String, dynamic>> categoryIdMapList =
+        await getCategoryIdMap();
     final List<Category> categoryIdList = [];
     categoryIdMapList.forEach((categoryIdMap) {
       categoryIdList.add(Category.fromMap(categoryIdMap));
@@ -169,7 +170,8 @@ class DatabaseHelper {
     return categoryList;
   }
 
-  Future<List<Item>> getSearchItemList(String userSearchItem, String column) async {
+  Future<List<Item>> getSearchItemList(
+      String userSearchItem, String column) async {
     final List<Map<String, dynamic>> itemMapList =
         await getItemSearchMap(userSearchItem, column);
     final List<Item> itemList = [];

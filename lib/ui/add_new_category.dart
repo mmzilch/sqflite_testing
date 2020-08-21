@@ -7,16 +7,20 @@ class AddNewCategory extends StatefulWidget {
   final Category category;
   final int categoryId;
   final Function updateCategoryList;
-  AddNewCategory({this.category, this.updateCategoryList,this.categoryId});
+  AddNewCategory({this.category, this.updateCategoryList, this.categoryId});
   @override
   _AddNewCategoryState createState() => _AddNewCategoryState();
 }
 
 class _AddNewCategoryState extends State<AddNewCategory> {
+  int deviceId = 01;
   _addCategory() async {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       Category category = Category(
+        id: widget.categoryId == 0
+            ? widget.categoryId + 100 + deviceId
+            : widget.categoryId + 100,
         code: codeController.text,
         name: nameController.text,
         date: formattedDate.format(DateTime.now()),
