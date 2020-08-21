@@ -1,10 +1,8 @@
+import 'package:sqflite_test/database/database_helper.dart';
 import 'package:sqflite_test/model/category.dart';
-import 'package:sqflite_test/search_dialog.dart';
 import 'package:sqflite_test/ui/add_new_category.dart';
-
-import 'add_new_category.dart';
-import 'model/database_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:sqflite_test/ui/search_dialog.dart';
 
 class CategoryScreen extends StatefulWidget {
   @override
@@ -207,12 +205,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
         floatingActionButton: FloatingActionButton(
             backgroundColor: Colors.teal,
             child: Icon(Icons.add),
-            onPressed: () {
+            onPressed: () async{
+              List<Category> categoryIdList = await DatabaseHelper.instance.getCategoryIdList();
+              List<int> idList = categoryIdList.map((e) => e.id).toList();
+           print(idList.isEmpty ? 0 : idList.reduce((curr, next) => curr > next? curr: next));
               showDialog(
                 context: context,
                 builder: (context) {
                   return AddNewCategory(
-                      updateCategoryList: _updateCategoryList);
+                      updateCategoryList: _updateCategoryList,
+                      categoryId: categoryIdList.map((e) => e.id).toList());
                 },
               );
             }),

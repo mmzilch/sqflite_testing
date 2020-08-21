@@ -79,6 +79,20 @@ class DatabaseHelper {
     return result;
   }
 
+  Future<List<Map<String, dynamic>>> getCategoryIdMap() async {
+    Database db = await this.db;
+    final List<Map<String, dynamic>> result =
+        await db.rawQuery('SELECT id FROM $categoryTable');
+    return result;
+  }
+
+  Future<List<Map<String, dynamic>>> getItemIdMap() async {
+    Database db = await this.db;
+    final List<Map<String, dynamic>> result =
+        await db.rawQuery('SELECT id FROM $itemTable');
+    return result;
+  }
+
   Future<List<Category>> getNameList() async {
     final List<Map<String, dynamic>> taskMapList = await getNameMap();
     final List<Category> categoryList = [];
@@ -86,6 +100,24 @@ class DatabaseHelper {
       categoryList.add(Category.fromMap(categoryMap));
     });
     return categoryList;
+  }
+
+  Future<List<Category>> getCategoryIdList() async {
+    final List<Map<String, dynamic>> categoryIdMapList = await getCategoryIdMap();
+    final List<Category> categoryIdList = [];
+    categoryIdMapList.forEach((categoryIdMap) {
+      categoryIdList.add(Category.fromMap(categoryIdMap));
+    });
+    return categoryIdList;
+  }
+
+  Future<List<Item>> getItemIdList() async {
+    final List<Map<String, dynamic>> itemIdMapList = await getItemIdMap();
+    final List<Item> itemIdList = [];
+    itemIdMapList.forEach((itemIdMap) {
+      itemIdList.add(Item.fromMap(itemIdMap));
+    });
+    return itemIdList;
   }
 
   Future<List<Category>> getCategoryList() async {

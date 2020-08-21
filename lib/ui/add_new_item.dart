@@ -7,9 +7,10 @@ import '../model/item.dart';
 
 class AddNewItem extends StatefulWidget {
   final List name;
+  final List id;
   final Item item;
   final Function updateItemList;
-  AddNewItem({this.item, this.updateItemList, this.name});
+  AddNewItem({this.item, this.updateItemList, this.name , this.id});
 
   @override
   _AddNewItemState createState() => _AddNewItemState();
