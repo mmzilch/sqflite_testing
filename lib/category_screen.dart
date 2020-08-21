@@ -1,8 +1,9 @@
 import 'package:sqflite_test/model/category.dart';
-import 'package:sqflite_test/ui/search_dialog.dart';
+import 'package:sqflite_test/search_dialog.dart';
+import 'package:sqflite_test/ui/add_new_category.dart';
 
-import 'ui/add_new_category.dart';
-import 'database/database_helper.dart';
+import 'add_new_category.dart';
+import 'model/database_helper.dart';
 import 'package:flutter/material.dart';
 
 class CategoryScreen extends StatefulWidget {

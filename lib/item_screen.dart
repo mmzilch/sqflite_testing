@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sqflite_test/ui/add_new_item.dart';
 import 'package:sqflite_test/database/database_helper.dart';
 import 'package:sqflite_test/model/item.dart';
+import 'package:sqflite_test/ui/search_item_dialot.dart';
 
 import 'model/category.dart';
 
@@ -27,13 +28,13 @@ class _ItemScreenState extends State<ItemScreen> {
     });
   }
 
-  // _updateSearchList(String usersearch, String cloumn) async {
-  //   _itemList =
-  //       await DatabaseHelper.instance.getItemSearchList(usersearch, cloumn);
-  //   setState(() {
-  //     item = _itemList;
-  //   });
-  // }
+  _updateSearchItemList(String usersearch, String cloumn) async {
+    _itemList =
+        await DatabaseHelper.instance.getSearchItemList(usersearch, cloumn);
+    setState(() {
+      item = _itemList;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +48,12 @@ class _ItemScreenState extends State<ItemScreen> {
             IconButton(
               icon: Icon(Icons.search),
               onPressed: () {
-                // showDialog(
-                //   context: context,
-                //   builder: (context) {
-                //     //return SearchDialog(updateSearchList: _updateSearchList);
-                //   },
-                // );
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return SearchItemDialog(updateSearchItemList: _updateSearchItemList);
+                  },
+                );
               },
             ),
             IconButton(
