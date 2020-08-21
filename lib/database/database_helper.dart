@@ -32,7 +32,7 @@ class DatabaseHelper {
   }
 
   Future<Database> _initDatabase() async {
-    var directory = await getApplicationDocumentsDirectory();
+    var directory = await getExternalStorageDirectory();
     String path = directory.path + "cloud_pos.db";
 
     final cloudPosDB =

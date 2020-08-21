@@ -18,14 +18,14 @@ class _AddNewCategoryState extends State<AddNewCategory> {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       Category category = Category(
-        id: widget.categoryId == 0
-            ? widget.categoryId + 100 + deviceId
-            : widget.categoryId + 100,
         code: codeController.text,
         name: nameController.text,
         date: formattedDate.format(DateTime.now()),
       );
       if (widget.category == null) {
+        category.id = widget.categoryId == 0
+            ? widget.categoryId + 100 + deviceId
+            : widget.categoryId + 100;
         category.synced = 0;
         DatabaseHelper.instance.insertCategory(category);
       } else {
@@ -91,6 +91,7 @@ class _AddNewCategoryState extends State<AddNewCategory> {
             )),
         FlatButton(
             onPressed: () => _addCategory(),
+            // onPressed: () => print(widget.category.id),
             child: Text(widget.category == null ? "Add" : "Update",
                 style: TextStyle(color: Colors.blue)))
       ],
