@@ -242,7 +242,7 @@ class _ItemScreenState extends State<ItemScreen> {
                   return AddNewItem(
                     updateItemList: _updateItemList,
                     name: nameList.map((e) => e.name).toList(),
-                    id: itemIdList.map((e) => e.id).toList(),
+                    id: idList.isEmpty ? 0 : idList.reduce((curr, next) => curr > next? curr: next),
                   );
                 },
               );

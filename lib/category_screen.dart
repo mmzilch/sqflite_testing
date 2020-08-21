@@ -214,7 +214,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 builder: (context) {
                   return AddNewCategory(
                       updateCategoryList: _updateCategoryList,
-                      categoryId: categoryIdList.map((e) => e.id).toList());
+                      categoryId: idList.isEmpty ? 0 : idList.reduce((curr, next) => curr > next? curr: next));
                 },
               );
             }),

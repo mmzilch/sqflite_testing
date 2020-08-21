@@ -5,7 +5,7 @@ import 'package:sqflite_test/database/database_helper.dart';
 
 class AddNewCategory extends StatefulWidget {
   final Category category;
-  final List categoryId;
+  final int categoryId;
   final Function updateCategoryList;
   AddNewCategory({this.category, this.updateCategoryList,this.categoryId});
   @override
