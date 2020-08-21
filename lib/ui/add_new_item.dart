@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sqflite_test/model/item.dart';
 
-import 'model/database_helper.dart';
-import 'model/item.dart';
+import '../database/database_helper.dart';
+import '../model/item.dart';
 
 class AddNewItem extends StatefulWidget {
   final List name;

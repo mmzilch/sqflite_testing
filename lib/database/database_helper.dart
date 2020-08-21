@@ -117,6 +117,14 @@ class DatabaseHelper {
     return result;
   }
 
+  Future<List<Map<String, dynamic>>> getItemSearchMap(
+      String userSearchItem, String column) async {
+    Database db = await this.db;
+    final List<Map<String, dynamic>> result = await db
+        .rawQuery('SELECT * FROM item_table WHERE $column=?', [userSearchItem]);
+    return result;
+  }
+
   Future<List<Category>> getSearchList(String userSearch, String column) async {
     final List<Map<String, dynamic>> taskMapList =
         await getSearchMap(userSearch, column);
@@ -127,6 +135,17 @@ class DatabaseHelper {
     categoryList
         .sort((categoryA, categoryB) => categoryA.id.compareTo(categoryB.id));
     return categoryList;
+  }
+
+  Future<List<Item>> getSearchItemList(String userSearchItem, String column) async {
+    final List<Map<String, dynamic>> itemMapList =
+        await getItemSearchMap(userSearchItem, column);
+    final List<Item> itemList = [];
+    itemMapList.forEach((itemMap) {
+      itemList.add(Item.fromMap(itemMap));
+    });
+    itemList.sort((itemA, itemB) => itemA.id.compareTo(itemB.id));
+    return itemList;
   }
 
   Future<int> insertCategory(Category category) async {

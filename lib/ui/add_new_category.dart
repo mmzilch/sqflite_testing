@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sqflite_test/model/category.dart';
-import 'package:sqflite_test/model/database_helper.dart';
+import 'package:sqflite_test/database/database_helper.dart';
 
 class AddNewCategory extends StatefulWidget {
   final Category category;

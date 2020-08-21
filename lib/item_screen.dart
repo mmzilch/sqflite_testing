@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite_test/add_new_item.dart';
-import 'package:sqflite_test/model/database_helper.dart';
+import 'package:sqflite_test/ui/add_new_item.dart';
+import 'package:sqflite_test/database/database_helper.dart';
 import 'package:sqflite_test/model/item.dart';
 
 import 'model/category.dart';
