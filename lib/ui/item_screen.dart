@@ -4,7 +4,7 @@ import 'package:sqflite_test/database/database_helper.dart';
 import 'package:sqflite_test/model/item.dart';
 import 'package:sqflite_test/ui/search_item_dialot.dart';
 
-import 'model/category.dart';
+import '../model/category.dart';
 
 class ItemScreen extends StatefulWidget {
   @override

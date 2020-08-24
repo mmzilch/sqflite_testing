@@ -12,6 +12,7 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState extends State<CategoryScreen> {
   List<Category> _categoryList;
   List<Category> category;
+  int deviceId = 3;
 
   @override
   void initState() {
@@ -97,6 +98,18 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18))),
                                 DataColumn(
+                                    label: Text('DID',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18))),
+                                DataColumn(
+                                    label: Text('LID',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18))),
+                                DataColumn(
                                     label: Text('Code',
                                         style: TextStyle(
                                             color: Colors.black,
@@ -137,6 +150,20 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 .map((e) => DataRow(cells: [
                                       DataCell(Text(
                                         e.id.toString(),
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 15),
+                                      )),
+                                      DataCell(Text(
+                                        e.dId.toString(),
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 15),
+                                      )),
+                                      DataCell(Text(
+                                        e.lId.toString(),
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.w500,
@@ -207,15 +234,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
             child: Icon(Icons.add),
             onPressed: () async {
               List<Category> categoryIdList =
-                  await DatabaseHelper.instance.getCategoryIdList();
+                  await DatabaseHelper.instance.getCategoryIdList(deviceId);
               List<int> idList = categoryIdList.map((e) => e.id).toList();
-              //  print(idList.isEmpty ? 0 : idList.reduce((curr, next) => curr > next? curr: next));
+               print(idList.isEmpty ? 0 : idList.reduce((curr, next) => curr > next? curr: next));
               showDialog(
                 context: context,
                 builder: (context) {
                   return AddNewCategory(
+                    deviceId: deviceId,
                       updateCategoryList: _updateCategoryList,
-                      categoryId: idList.isEmpty
+                      id: idList.isEmpty
                           ? 0
                           : idList.reduce(
                               (curr, next) => curr > next ? curr : next));

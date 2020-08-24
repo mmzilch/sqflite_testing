@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite_test/category_screen.dart';
+import 'package:sqflite_test/ui/category_screen.dart';
 
-import 'item_screen.dart';
+import 'ui/item_screen.dart';
 
 void main() {
   runApp(MaterialApp(

@@ -1,18 +1,22 @@
 class Category {
   int id;
+  int dId;
+  String lId;
   String date;
   String name;
   String code;
   int synced;
 
-  Category({this.id, this.date, this.synced, this.name, this.code});
-  Category.withID({this.id, this.date, this.name, this.synced, this.code});
+  Category({this.id, this.date, this.synced, this.name, this.code,this.dId,this.lId});
+  Category.withID({this.id, this.date, this.name, this.synced, this.code,this.lId,this.dId});
 
   Map<String, dynamic> toMap() {
     final map = Map<String, dynamic>();
     if (id != null) {
       map['id'] = id;
     }
+    map['dId'] = dId;
+    map['lId'] = lId;
     map['name'] = name;
     map['date'] = date;
     map['code'] = code;
@@ -23,6 +27,8 @@ class Category {
   factory Category.fromMap(Map<String, dynamic> map) {
     return Category.withID(
       id: map['id'],
+      dId: map['dId'],
+      lId: map['lId'],
       name: map['name'],
       date: map['date'],
       code: map['code'],

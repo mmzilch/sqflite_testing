@@ -10,6 +10,8 @@ class DatabaseHelper {
 
   String categoryTable = 'category_table';
   String colId = 'id';
+  String colDid = 'dId';
+  String colLid = 'lId';
   String colName = 'name';
   String colDate = 'date';
   String colCode = 'code';
@@ -42,7 +44,9 @@ class DatabaseHelper {
 
   void _createDB(Database db, int version) async {
     await db.execute('''CREATE TABLE $categoryTable(
-          $colId INTEGER PRIMARY KEY,
+          $colId INTEGER,
+          $colLid TEXT,
+          $colDid INTEGER,
           $colName TEXT,
           $colCode TEXT,
           $colDate TEXT ,
@@ -79,10 +83,10 @@ class DatabaseHelper {
     return result;
   }
 
-  Future<List<Map<String, dynamic>>> getCategoryIdMap() async {
+  Future<List<Map<String, dynamic>>> getCategoryIdMap(int dId) async {
     Database db = await this.db;
     final List<Map<String, dynamic>> result =
-        await db.rawQuery('SELECT id FROM $categoryTable');
+        await db.rawQuery('SELECT id FROM $categoryTable WHERE dID = $dId');
     return result;
   }
 
@@ -102,9 +106,9 @@ class DatabaseHelper {
     return categoryList;
   }
 
-  Future<List<Category>> getCategoryIdList() async {
+  Future<List<Category>> getCategoryIdList(int dId) async {
     final List<Map<String, dynamic>> categoryIdMapList =
-        await getCategoryIdMap();
+        await getCategoryIdMap(dId);
     final List<Category> categoryIdList = [];
     categoryIdMapList.forEach((categoryIdMap) {
       categoryIdList.add(Category.fromMap(categoryIdMap));
@@ -128,7 +132,7 @@ class DatabaseHelper {
       categoryList.add(Category.fromMap(categoryMap));
     });
     categoryList
-        .sort((categoryA, categoryB) => categoryA.id.compareTo(categoryB.id));
+        .sort((categoryA, categoryB) => categoryA.date.compareTo(categoryB.date));
     return categoryList;
   }
 
@@ -178,7 +182,7 @@ class DatabaseHelper {
     itemMapList.forEach((itemMap) {
       itemList.add(Item.fromMap(itemMap));
     });
-    itemList.sort((itemA, itemB) => itemA.id.compareTo(itemB.id));
+    itemList.sort((itemA, itemB) => itemA.date.compareTo(itemB.date));
     return itemList;
   }
 

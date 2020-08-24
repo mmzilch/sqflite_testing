@@ -5,16 +5,17 @@ import 'package:sqflite_test/database/database_helper.dart';
 
 class AddNewCategory extends StatefulWidget {
   final Category category;
-  final int categoryId;
+  final int id;
+  final deviceId;
   final Function updateCategoryList;
-  AddNewCategory({this.category, this.updateCategoryList, this.categoryId});
+  AddNewCategory({this.category, this.updateCategoryList, this.id,this.deviceId});
   @override
   _AddNewCategoryState createState() => _AddNewCategoryState();
 }
 
 class _AddNewCategoryState extends State<AddNewCategory> {
-  int deviceId = 01;
   _addCategory() async {
+    print(widget.id);
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       Category category = Category(
@@ -23,9 +24,9 @@ class _AddNewCategoryState extends State<AddNewCategory> {
         date: formattedDate.format(DateTime.now()),
       );
       if (widget.category == null) {
-        category.id = widget.categoryId == 0
-            ? widget.categoryId + 100 + deviceId
-            : widget.categoryId + 100;
+        category.id = widget.id == 0 ? 1 :  widget.id + 1;
+        category.dId = widget.deviceId;
+        category.lId = category.id.toString() + "0" + widget.deviceId.toString();
         category.synced = 0;
         DatabaseHelper.instance.insertCategory(category);
       } else {
