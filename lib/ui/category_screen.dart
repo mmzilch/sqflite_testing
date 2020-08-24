@@ -187,6 +187,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         Checkbox(
                                           onChanged: (value) {
                                             e.synced = value ? 1 : 0;
+                                            print(e.synced);
                                             DatabaseHelper.instance
                                                 .updateCategory(e);
                                             _updateCategoryList();

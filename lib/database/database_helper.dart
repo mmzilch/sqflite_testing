@@ -7,7 +7,7 @@ class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._instance();
   static Database _database;
   DatabaseHelper._instance();
-
+//Need to add another column which is primary
   String categoryTable = 'category_table';
   String colId = 'id';
   String colDid = 'dId';
