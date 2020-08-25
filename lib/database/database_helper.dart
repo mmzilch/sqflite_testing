@@ -10,6 +10,7 @@ class DatabaseHelper {
 //Need to add another column which is primary
   String categoryTable = 'category_table';
   String colId = 'id';
+  String colCid = 'categoryId';
   String colDid = 'dId';
   String colLid = 'lId';
   String colName = 'name';
@@ -45,6 +46,7 @@ class DatabaseHelper {
   void _createDB(Database db, int version) async {
     await db.execute('''CREATE TABLE $categoryTable(
           $colId INTEGER,
+          $colCid INTEGER PRIMARY KEY AUTOINCREMENT,
           $colLid TEXT,
           $colDid INTEGER,
           $colName TEXT,
@@ -90,6 +92,13 @@ class DatabaseHelper {
     return result;
   }
 
+  Future<List<Map<String, dynamic>>> getCateIdMap() async {
+    Database db = await this.db;
+    final List<Map<String, dynamic>> result =
+        await db.rawQuery('SELECT categoryId FROM $categoryTable');
+    return result;
+  }
+
   Future<List<Map<String, dynamic>>> getItemIdMap() async {
     Database db = await this.db;
     final List<Map<String, dynamic>> result =
@@ -114,6 +123,16 @@ class DatabaseHelper {
       categoryIdList.add(Category.fromMap(categoryIdMap));
     });
     return categoryIdList;
+  }
+
+  Future<List<Category>> getCateIdList() async {
+    final List<Map<String, dynamic>> cateIdMapList =
+        await getCateIdMap();
+    final List<Category> cateIdList = [];
+    cateIdMapList.forEach((cateIdMap) {
+      cateIdList.add(Category.fromMap(cateIdMap));
+    });
+    return cateIdList;
   }
 
   Future<List<Item>> getItemIdList() async {

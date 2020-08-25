@@ -4,6 +4,8 @@ import 'package:sqflite_test/ui/add_new_category.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite_test/ui/search_dialog.dart';
 
+import '../database/database_helper.dart';
+
 class CategoryScreen extends StatefulWidget {
   @override
   _CategoryScreenState createState() => _CategoryScreenState();
@@ -149,7 +151,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             rows: category
                                 .map((e) => DataRow(cells: [
                                       DataCell(Text(
-                                        e.id.toString(),
+                                        e.categoryId.toString(),
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.w500,
@@ -238,6 +240,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   await DatabaseHelper.instance.getCategoryIdList(deviceId);
               List<int> idList = categoryIdList.map((e) => e.id).toList();
                print(idList.isEmpty ? 0 : idList.reduce((curr, next) => curr > next? curr: next));
+
+               List<Category> cateIdList = await DatabaseHelper.instance.getCateIdList();
+              
+               print("cateIDLIST>>>"+  cateIdList.map((e) => e.categoryId).toList().toString());
               showDialog(
                 context: context,
                 builder: (context) {
@@ -247,7 +253,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       id: idList.isEmpty
                           ? 0
                           : idList.reduce(
-                              (curr, next) => curr > next ? curr : next));
+                              (curr, next) => curr > next ? curr : next),
+                              cateId: cateIdList.map((e) => e.categoryId).toList(),);
                 },
               );
             }),

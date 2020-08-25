@@ -3,19 +3,21 @@ import 'package:intl/intl.dart';
 import 'package:sqflite_test/model/category.dart';
 import 'package:sqflite_test/database/database_helper.dart';
 
+import '../model/category.dart';
+
 class AddNewCategory extends StatefulWidget {
   final Category category;
   final int id;
   final deviceId;
+  final List cateId;
   final Function updateCategoryList;
-  AddNewCategory({this.category, this.updateCategoryList, this.id,this.deviceId});
+  AddNewCategory({this.category, this.updateCategoryList, this.id,this.deviceId, this.cateId});
   @override
   _AddNewCategoryState createState() => _AddNewCategoryState();
 }
 
 class _AddNewCategoryState extends State<AddNewCategory> {
   _addCategory() async {
-    print(widget.id);
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       Category category = Category(
@@ -26,12 +28,16 @@ class _AddNewCategoryState extends State<AddNewCategory> {
       if (widget.category == null) {
         category.id = widget.id == 0 ? 1 :  widget.id + 1;
         category.dId = widget.deviceId;
+        print("did>>>"+widget.deviceId.toString());
         category.lId = category.id.toString() + "0" + widget.deviceId.toString();
         category.synced = 0;
         DatabaseHelper.instance.insertCategory(category);
       } else {
         category.id = widget.category.id;
+        category.categoryId = widget.category.categoryId;
         category.synced = widget.category.synced;
+        category.dId = widget.category.dId;
+        category.lId = widget.category.lId;
         DatabaseHelper.instance.updateCategory(category);
       }
       await widget.updateCategoryList();
