@@ -28,7 +28,6 @@ class _AddNewCategoryState extends State<AddNewCategory> {
       if (widget.category == null) {
         category.id = widget.id == 0 ? 1 :  widget.id + 1;
         category.dId = widget.deviceId;
-        print("did>>>"+widget.deviceId.toString());
         category.lId = category.id.toString() + "0" + widget.deviceId.toString();
         category.synced = 0;
         DatabaseHelper.instance.insertCategory(category);
@@ -98,7 +97,6 @@ class _AddNewCategoryState extends State<AddNewCategory> {
             )),
         FlatButton(
             onPressed: () => _addCategory(),
-            // onPressed: () => print(widget.category.id),
             child: Text(widget.category == null ? "Add" : "Update",
                 style: TextStyle(color: Colors.blue)))
       ],

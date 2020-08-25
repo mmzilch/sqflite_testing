@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:sqflite_test/ui/add_new_item.dart';
 import 'package:sqflite_test/database/database_helper.dart';
 import 'package:sqflite_test/model/item.dart';
-import 'package:sqflite_test/ui/search_item_dialot.dart';
+import 'package:sqflite_test/ui/search_item_dialog.dart';
 
+import '../database/database_helper.dart';
 import '../model/category.dart';
+import '../model/item.dart';
 
 class ItemScreen extends StatefulWidget {
   @override
@@ -14,6 +16,7 @@ class ItemScreen extends StatefulWidget {
 class _ItemScreenState extends State<ItemScreen> {
   List<Item> _itemList;
   List<Item> item;
+  int deviceId = 3;
 
   @override
   void initState() {
@@ -51,7 +54,8 @@ class _ItemScreenState extends State<ItemScreen> {
                 showDialog(
                   context: context,
                   builder: (context) {
-                    return SearchItemDialog(updateSearchItemList: _updateSearchItemList);
+                    return SearchItemDialog(
+                        updateSearchItemList: _updateSearchItemList);
                   },
                 );
               },
@@ -94,6 +98,18 @@ class _ItemScreenState extends State<ItemScreen> {
                             columns: [
                                 DataColumn(
                                     label: Text('ID',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18))),
+                                DataColumn(
+                                    label: Text('DID',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 18))),
+                                DataColumn(
+                                    label: Text('LID',
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
@@ -156,6 +172,16 @@ class _ItemScreenState extends State<ItemScreen> {
                                             fontWeight: FontWeight.w500,
                                             fontSize: 15),
                                       )),
+                                      DataCell(Text(e.dId.toString(),
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 17))),
+                                      DataCell(Text(e.lId.toString(),
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 17))),
                                       DataCell(Text(e.name,
                                           style: TextStyle(
                                               color: Colors.black,
@@ -233,16 +259,26 @@ class _ItemScreenState extends State<ItemScreen> {
             onPressed: () async {
               List<Category> nameList =
                   await DatabaseHelper.instance.getNameList();
-                  List<Item> itemIdList = await DatabaseHelper.instance.getItemIdList();
-                  List<int> idList = itemIdList.map((e) => e.id).toList();
-              print(idList.isEmpty ? 0 : idList.reduce((curr, next) => curr > next? curr: next));
+              List<Item> itemIdList =
+                  await DatabaseHelper.instance.getItemIdList();
+              List<int> idList = itemIdList.map((e) => e.id).toList();
+              print("id>>>>"+(idList.isEmpty
+                  ? 0
+                  : idList.reduce((curr, next) => curr > next ? curr : next)).toString());
+                  List<Item> iIdList = await DatabaseHelper.instance.getIidList();
+                  print("Iid>>>>"+(iIdList.map((e) => e.itemId).toList()).toString());
               showDialog(
                 context: context,
                 builder: (context) {
                   return AddNewItem(
+                    deviceId: deviceId,
                     updateItemList: _updateItemList,
                     name: nameList.map((e) => e.name).toList(),
-                    id: idList.isEmpty ? 0 : idList.reduce((curr, next) => curr > next? curr: next),
+                    id: idList.isEmpty
+                        ? 0
+                        : idList
+                            .reduce((curr, next) => curr > next ? curr : next),
+                            itemId: iIdList.map((e) => e.itemId).toList(),
                   );
                 },
               );

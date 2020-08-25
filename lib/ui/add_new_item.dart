@@ -6,11 +6,13 @@ import '../database/database_helper.dart';
 import '../model/item.dart';
 
 class AddNewItem extends StatefulWidget {
-  final List name;
-  final int id;
   final Item item;
+  final int id;
+  final deviceId;
+  final List itemId;
+  final List name;
   final Function updateItemList;
-  AddNewItem({this.item, this.updateItemList, this.name , this.id});
+  AddNewItem({this.item, this.updateItemList, this.name , this.id, this.deviceId, this.itemId});
 
   @override
   _AddNewItemState createState() => _AddNewItemState();
@@ -30,10 +32,16 @@ class _AddNewItemState extends State<AddNewItem> {
           price: priceController.text,
           category: _category);
       if (widget.item == null) {
+        item.id = widget.id == 0 ? 1 : widget.id +1;
+        item.dId = widget.deviceId;
+        item.lId = item.id.toString() + '0' + widget.deviceId.toString();
         item.synced = 0;
         DatabaseHelper.instance.insertItem(item);
       } else {
         item.id = widget.item.id;
+        item.itemId = widget.item.itemId;
+        item.dId = widget.item.dId;
+        item.lId = widget.item.lId;
         item.category = widget.item.category;
         item.synced = widget.item.synced;
         DatabaseHelper.instance.updateItem(item);

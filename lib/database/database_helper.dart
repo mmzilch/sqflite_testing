@@ -3,6 +3,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_test/model/category.dart';
 import 'package:sqflite_test/model/item.dart';
 
+import '../model/item.dart';
+
 class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._instance();
   static Database _database;
@@ -20,6 +22,9 @@ class DatabaseHelper {
 
   String itemTable = 'item_table';
   String itemColId = 'id';
+  String itemColIid = 'itemId';
+  String itemColDid = 'dId';
+  String itemColLid = 'lId';
   String itemColName = 'name';
   String itemColDate = 'date';
   String itemColCode = 'code';
@@ -55,7 +60,10 @@ class DatabaseHelper {
           $colSynced BOOLEAN
           )''');
     await db.execute('''CREATE TABLE $itemTable(
-      $itemColId INTEGER PRIMARY KEY AUTOINCREMENT,
+      $itemColId INTEGER,
+      $itemColIid INTEGER PRIMARY KEY AUTOINCREMENT,
+      $itemColDid INTEGER,
+      $itemColLid TEXT,
       $itemColName TEXT,
       $itemColCode TEXT,
       $itemColDate TEXT,
@@ -99,6 +107,13 @@ class DatabaseHelper {
     return result;
   }
 
+  Future<List<Map<String, dynamic>>> getIidMap() async {
+    Database db = await this.db;
+    final List<Map<String, dynamic>> result =
+        await db.rawQuery('SELECT itemId FROM $itemTable');
+    return result;
+  }
+
   Future<List<Map<String, dynamic>>> getItemIdMap() async {
     Database db = await this.db;
     final List<Map<String, dynamic>> result =
@@ -133,6 +148,16 @@ class DatabaseHelper {
       cateIdList.add(Category.fromMap(cateIdMap));
     });
     return cateIdList;
+  }
+
+   Future<List<Item>> getIidList() async {
+    final List<Map<String, dynamic>> itemIdMapList =
+        await getCateIdMap();
+    final List<Item> itemIdList = [];
+    itemIdMapList.forEach((itemIdMap) {
+      itemIdList.add(Item.fromMap(itemIdMap));
+    });
+    return itemIdList;
   }
 
   Future<List<Item>> getItemIdList() async {

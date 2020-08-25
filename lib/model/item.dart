@@ -1,5 +1,8 @@
 class Item {
   int id;
+  int itemId;
+  int dId;
+  String lId;
   String date;
   String name;
   String code;
@@ -9,6 +12,9 @@ class Item {
 
   Item(
       {this.category,
+      this.dId,
+      this.lId,
+      this.itemId,
       this.code,
       this.date,
       this.id,
@@ -17,11 +23,14 @@ class Item {
       this.synced});
   Item.withID(
       {this.category,
+      this.itemId,
+      this.lId,
+      this.dId,
       this.code,
       this.date,
       this.id,
       this.name,
-      this.price,
+      this.price, 
       this.synced});
 
   Map<String, dynamic> toMap() {
@@ -29,6 +38,9 @@ class Item {
     if (id != null) {
       map['id'] = id;
     }
+    map['dId'] = dId;
+    map['lId'] = lId;
+    map['itemId'] = itemId;
     map['name'] = name;
     map['date'] = date;
     map['code'] = code;
@@ -41,6 +53,9 @@ class Item {
   factory Item.fromMap(Map<String, dynamic> map) {
     return Item.withID(
       id: map['id'],
+      dId: map['dId'],
+      lId: map['lId'],
+      itemId: map['itemId'],
       name: map['name'],
       date: map['date'],
       code: map['code'],
