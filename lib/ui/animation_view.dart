@@ -13,7 +13,7 @@ class _AnimationViewState extends State<AnimationView> with SingleTickerProvider
   @override
   void initState() {
     super.initState();
-    animationController = AnimationController(duration: Duration(seconds: 50), value: this);
+    animationController = AnimationController(duration: Duration(seconds: 50), vsync: this);
 
     final curvedAnimation = CurvedAnimation(parent: animationController, 
     curve: Curves.bounceIn, reverseCurve: Curves.easeOut);
